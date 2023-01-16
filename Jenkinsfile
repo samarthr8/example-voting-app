@@ -39,16 +39,15 @@ pipeline{
                 sh "NEW_TASK_INFO=$(aws ecs register-task-definition --region us-east-1 --cli-input-json "$NEW_TASK_DEFINTIION")"
                 sh "NEW_REVISION=$(echo $NEW_TASK_INFO | jq '.taskDefinition.revision')"
             }
-            
-        }
+        }    
         stage("Fifth Stage: Task def update"){
             steps{
                 sh "aws ecs update-service --cluster jenkins-vote  --service vote-jk --region us-east-1 --task-definition vote-c39-fargate:${NEW_REVISION}"
             }
-            
-        }
-    }
-     post { 
+        }    
+    }    
+    
+    post { 
         always { 
             echo 'I will always say Hello again!'
         }
